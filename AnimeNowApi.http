@@ -1,0 +1,6 @@
+@AnimeNowApi_HostAddress = http://localhost:5197
+
+GET {{AnimeNowApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

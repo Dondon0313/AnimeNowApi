@@ -14,7 +14,7 @@ namespace AnimeNowApi.Data
             // 檢查是否已有數據
             if (context.Bangumis.Any())
             {
-                return; // 數據庫已包含數據
+                return; 
             }
 
             // 添加類型
@@ -99,18 +99,18 @@ namespace AnimeNowApi.Data
             // 添加番劇與類型關聯
             var bangumiGenres = new BangumiGenre[]
             {
-                new BangumiGenre { BangumiId = 1, GenreId = 1 }, // 葬送的芙莉蓮 - 奇幻
-                new BangumiGenre { BangumiId = 1, GenreId = 2 }, // 葬送的芙莉蓮 - 冒險
-                new BangumiGenre { BangumiId = 1, GenreId = 3 }, // 葬送的芙莉蓮 - 治癒
-                new BangumiGenre { BangumiId = 2, GenreId = 4 }, // 我推的孩子 - 懸疑
-                new BangumiGenre { BangumiId = 2, GenreId = 5 }, // 我推的孩子 - 音樂
-                new BangumiGenre { BangumiId = 2, GenreId = 6 }, // 我推的孩子 - 偶像
-                new BangumiGenre { BangumiId = 3, GenreId = 1 }, // 無職轉生 - 奇幻
-                new BangumiGenre { BangumiId = 3, GenreId = 2 }, // 無職轉生 - 冒險
-                new BangumiGenre { BangumiId = 3, GenreId = 7 }, // 無職轉生 - 異世界
-                new BangumiGenre { BangumiId = 4, GenreId = 5 }, // 上低音號 - 音樂
-                new BangumiGenre { BangumiId = 4, GenreId = 8 }, // 上低音號 - 校園
-                new BangumiGenre { BangumiId = 4, GenreId = 9 }  // 上低音號 - 青春
+                new BangumiGenre { BangumiId = 1, GenreId = 1 }, 
+                new BangumiGenre { BangumiId = 1, GenreId = 2 }, 
+                new BangumiGenre { BangumiId = 1, GenreId = 3 }, 
+                new BangumiGenre { BangumiId = 2, GenreId = 4 }, 
+                new BangumiGenre { BangumiId = 2, GenreId = 5 }, 
+                new BangumiGenre { BangumiId = 2, GenreId = 6 }, 
+                new BangumiGenre { BangumiId = 3, GenreId = 1 }, 
+                new BangumiGenre { BangumiId = 3, GenreId = 2 }, 
+                new BangumiGenre { BangumiId = 3, GenreId = 7 }, 
+                new BangumiGenre { BangumiId = 4, GenreId = 5 }, 
+                new BangumiGenre { BangumiId = 4, GenreId = 8 }, 
+                new BangumiGenre { BangumiId = 4, GenreId = 9 }  
             };
 
             foreach (BangumiGenre bg in bangumiGenres)
@@ -124,7 +124,7 @@ namespace AnimeNowApi.Data
             {
                 new Episode
                 {
-                    BangumiId = 1, // 葬送的芙莉蓮
+                    BangumiId = 1,
                     Number = 1,
                     Title = "精靈的旅程",
                     AirDate = new DateTime(2025, 4, 5),
@@ -154,7 +154,7 @@ namespace AnimeNowApi.Data
                 },
                 new Episode
                 {
-                    BangumiId = 2, // 我推的孩子
+                    BangumiId = 2, 
                     Number = 1,
                     Title = "偶像的真實",
                     AirDate = new DateTime(2025, 4, 6),

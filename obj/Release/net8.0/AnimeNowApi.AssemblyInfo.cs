@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnimeNowApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+527f6479da9008225964855f49bfa6e8111253a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnimeNowApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnimeNowApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

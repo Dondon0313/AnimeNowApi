@@ -17,7 +17,7 @@ namespace AnimeNowApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // 配置 BangumiGenre 為一個連結表，帶有組合主鍵
+            // 配置 BangumiGenre 
             modelBuilder.Entity<BangumiGenre>()
                 .HasKey(bg => new { bg.BangumiId, bg.GenreId });
 
@@ -39,7 +39,7 @@ namespace AnimeNowApi.Data
                 .WithMany(b => b.Episodes)
                 .HasForeignKey(e => e.BangumiId);
 
-            // 設置 Bangumi Rating 屬性的精度 (仍然保留但在 InMemory 中不起實際作用)
+            // 設置 Bangumi Rating 屬性的精度 
             modelBuilder.Entity<Bangumi>()
                 .Property(b => b.Rating)
                 .HasPrecision(3, 1);

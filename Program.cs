@@ -34,11 +34,11 @@ builder.Services.AddCors(options =>
 // 建立應用程序
 var app = builder.Build();
 
-// 無條件啟用 Swagger (不管是開發還是生產環境)
+// 無條件啟用 Swagger 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimeNow API v1"));
 
-// 注釋掉HTTPS重定向以避免錯誤
+
 //app.UseHttpsRedirection();
 
 app.UseCors("AllowVueApp");

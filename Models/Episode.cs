@@ -11,8 +11,8 @@ namespace AnimeNowApi.Models
         public DateTime AirDate { get; set; }
         public string Duration { get; set; }
         public string Description { get; set; }
-        public string? Thumbnail { get; set; } // 改為可空
-        public string? VideoUrl { get; set; }  // 改為可空
+        public string? Thumbnail { get; set; } 
+        public string? VideoUrl { get; set; }  
         public int Views { get; set; }
 
         // 導航屬性

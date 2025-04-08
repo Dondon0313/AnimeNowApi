@@ -1,26 +1,43 @@
-using Microsoft.OpenApi.Models;
+ï»¿using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using AnimeNowApi.Data;
 using AnimeNowApi.Mappings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using AnimeNowApi.Services;
+using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ²K¥[ªA°È¨ì®e¾¹
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy()
+        };
+    });
+
 builder.Services.AddEndpointsApiExplorer();
+
+// Swagger é…ç½®
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnimeNow API", Version = "v1" });
 });
 
-// ¨Ï¥Î InMemory ¸ê®Æ®w¦Ó«D SQL Server
+// æš«æ™‚ä½¿ç”¨ InMemory è³‡æ–™åº«è€Œé SQL Server
 builder.Services.AddDbContext<AnimeDbContext>(options =>
     options.UseInMemoryDatabase("AnimeDb"));
 
-// ²K¥[ AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+// æ·»åŠ  AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile), typeof(Program));
 
-// ²K¥[ CORS
+// æ·»åŠ  CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueApp", builder =>
@@ -31,21 +48,48 @@ builder.Services.AddCors(options =>
     });
 });
 
-// «Ø¥ßÀ³¥Îµ{§Ç
+// æ·»åŠ èªè­‰æœå‹™
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+        builder.Configuration["TokenSettings:Key"] ?? "DefaultSecureKeyForDevelopment1234!")),
+            ValidIssuer = builder.Configuration["TokenSettings:Issuer"] ?? "DefaultIssuer",
+            ValidAudience = builder.Configuration["TokenSettings:Audience"] ?? "DefaultAudience",
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+// æ·»åŠ æˆæ¬Šæœå‹™
+builder.Services.AddAuthorization();
+
+// è¨»å†Š TokenService
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+// å»ºç«‹æ‡‰ç”¨ç¨‹åº
 var app = builder.Build();
 
-// µL±ø¥ó±Ò¥Î Swagger 
+// ç„¡æ¢ä»¶å•Ÿç”¨ Swagger 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimeNow API v1"));
 
-
-//app.UseHttpsRedirection();
-
+// CORS
 app.UseCors("AllowVueApp");
+
+// èªè­‰å’Œæˆæ¬Š
+app.UseAuthentication();
 app.UseAuthorization();
+
+// æ§åˆ¶å™¨å°æ˜ 
 app.MapControllers();
 
-// ªì©l¤Æ°O¾ĞÅé¸ê®Æ®w
+// åˆå§‹åŒ–è¨˜æ†¶é«”è³‡æ–™åº«
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -57,7 +101,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "µo¥Í¿ù»~¡AµLªkªì©l¤Æ¸ê®Æ¡C");
+        logger.LogError(ex, "ç™¼ç”ŸéŒ¯èª¤ï¼Œç„¡æ³•åˆå§‹åŒ–è³‡æ–™ã€‚");
     }
 }
 

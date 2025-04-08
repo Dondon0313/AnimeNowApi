@@ -15,6 +15,8 @@ namespace AnimeNowApi.Data
         public DbSet<Genre> Genres { get; set; }
         public DbSet<BangumiGenre> BangumiGenres { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // 配置 BangumiGenre 
@@ -43,6 +45,15 @@ namespace AnimeNowApi.Data
             modelBuilder.Entity<Bangumi>()
                 .Property(b => b.Rating)
                 .HasPrecision(3, 1);
+
+            // 用戶配置
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }

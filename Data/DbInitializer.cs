@@ -14,7 +14,7 @@ namespace AnimeNowApi.Data
             // 檢查是否已有數據
             if (context.Bangumis.Any())
             {
-                return; 
+                return;
             }
 
             // 添加類型
@@ -96,21 +96,85 @@ namespace AnimeNowApi.Data
             }
             context.SaveChanges();
 
+            // 取得所有已保存的番劇和類型，便後續使用
+            var bangumisDict = context.Bangumis.ToDictionary(b => b.Id);
+            var genresDict = context.Genres.ToDictionary(g => g.Id);
+
             // 添加番劇與類型關聯
             var bangumiGenres = new BangumiGenre[]
             {
-                new BangumiGenre { BangumiId = 1, GenreId = 1 }, 
-                new BangumiGenre { BangumiId = 1, GenreId = 2 }, 
-                new BangumiGenre { BangumiId = 1, GenreId = 3 }, 
-                new BangumiGenre { BangumiId = 2, GenreId = 4 }, 
-                new BangumiGenre { BangumiId = 2, GenreId = 5 }, 
-                new BangumiGenre { BangumiId = 2, GenreId = 6 }, 
-                new BangumiGenre { BangumiId = 3, GenreId = 1 }, 
-                new BangumiGenre { BangumiId = 3, GenreId = 2 }, 
-                new BangumiGenre { BangumiId = 3, GenreId = 7 }, 
-                new BangumiGenre { BangumiId = 4, GenreId = 5 }, 
-                new BangumiGenre { BangumiId = 4, GenreId = 8 }, 
-                new BangumiGenre { BangumiId = 4, GenreId = 9 }  
+                new BangumiGenre {
+                    BangumiId = 1,
+                    GenreId = 1,
+                    Bangumi = bangumisDict[1],
+                    Genre = genresDict[1]
+                },
+                new BangumiGenre {
+                    BangumiId = 1,
+                    GenreId = 2,
+                    Bangumi = bangumisDict[1],
+                    Genre = genresDict[2]
+                },
+                new BangumiGenre {
+                    BangumiId = 1,
+                    GenreId = 3,
+                    Bangumi = bangumisDict[1],
+                    Genre = genresDict[3]
+                },
+                new BangumiGenre {
+                    BangumiId = 2,
+                    GenreId = 4,
+                    Bangumi = bangumisDict[2],
+                    Genre = genresDict[4]
+                },
+                new BangumiGenre {
+                    BangumiId = 2,
+                    GenreId = 5,
+                    Bangumi = bangumisDict[2],
+                    Genre = genresDict[5]
+                },
+                new BangumiGenre {
+                    BangumiId = 2,
+                    GenreId = 6,
+                    Bangumi = bangumisDict[2],
+                    Genre = genresDict[6]
+                },
+                new BangumiGenre {
+                    BangumiId = 3,
+                    GenreId = 1,
+                    Bangumi = bangumisDict[3],
+                    Genre = genresDict[1]
+                },
+                new BangumiGenre {
+                    BangumiId = 3,
+                    GenreId = 2,
+                    Bangumi = bangumisDict[3],
+                    Genre = genresDict[2]
+                },
+                new BangumiGenre {
+                    BangumiId = 3,
+                    GenreId = 7,
+                    Bangumi = bangumisDict[3],
+                    Genre = genresDict[7]
+                },
+                new BangumiGenre {
+                    BangumiId = 4,
+                    GenreId = 5,
+                    Bangumi = bangumisDict[4],
+                    Genre = genresDict[5]
+                },
+                new BangumiGenre {
+                    BangumiId = 4,
+                    GenreId = 8,
+                    Bangumi = bangumisDict[4],
+                    Genre = genresDict[8]
+                },
+                new BangumiGenre {
+                    BangumiId = 4,
+                    GenreId = 9,
+                    Bangumi = bangumisDict[4],
+                    Genre = genresDict[9]
+                }
             };
 
             foreach (BangumiGenre bg in bangumiGenres)
@@ -130,7 +194,8 @@ namespace AnimeNowApi.Data
                     AirDate = new DateTime(2025, 4, 5),
                     Duration = "24:30",
                     Description = "魔王被打倒後，精靈魔法使芙莉蓮踏上尋找人類情感的旅途。",
-                    Views = 15420
+                    Views = 15420,
+                    Bangumi = bangumisDict[1]
                 },
                 new Episode
                 {
@@ -140,7 +205,8 @@ namespace AnimeNowApi.Data
                     AirDate = new DateTime(2025, 4, 12),
                     Duration = "24:15",
                     Description = "芙莉蓮回憶起與昔日夥伴的冒險，決定尋找新的同伴。",
-                    Views = 12830
+                    Views = 12830,
+                    Bangumi = bangumisDict[1]
                 },
                 new Episode
                 {
@@ -150,17 +216,19 @@ namespace AnimeNowApi.Data
                     AirDate = new DateTime(2025, 4, 19),
                     Duration = "24:45",
                     Description = "芙莉蓮收了新弟子，開始教導她了解魔法的本質。",
-                    Views = 10240
+                    Views = 10240,
+                    Bangumi = bangumisDict[1]
                 },
                 new Episode
                 {
-                    BangumiId = 2, 
+                    BangumiId = 2,
                     Number = 1,
                     Title = "偶像的真實",
                     AirDate = new DateTime(2025, 4, 6),
                     Duration = "23:40",
                     Description = "偶像組合 B 小隊面臨解散危機，愛開始懷疑自己的選擇。",
-                    Views = 18720
+                    Views = 18720,
+                    Bangumi = bangumisDict[2]
                 },
                 new Episode
                 {
@@ -170,7 +238,8 @@ namespace AnimeNowApi.Data
                     AirDate = new DateTime(2025, 4, 13),
                     Duration = "23:50",
                     Description = "新角色的加入打亂了原有的平衡，背後似乎隱藏著不為人知的秘密。",
-                    Views = 16540
+                    Views = 16540,
+                    Bangumi = bangumisDict[2]
                 }
             };
 

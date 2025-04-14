@@ -7,7 +7,14 @@ namespace AnimeNowApi.DTOs
         public int Id { get; set; }
         public required string Username { get; set; }
         public required string Email { get; set; }
-        public string? Token { get; set; } // Token 可以保持可空，因為它可能不是必須的
+        public string? Token { get; set; } // Token 可以保持可空
+    }
+
+    public class UserLoginResponseDto
+    {
+        public int Id { get; set; }
+        public required string Username { get; set; }
+        public required string Token { get; set; }
     }
 
     public class RegisterDto

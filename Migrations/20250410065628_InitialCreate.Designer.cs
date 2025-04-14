@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimeNowApi.Migrations
 {
     [DbContext(typeof(AnimeDbContext))]
-    [Migration("20250407060656_InitialCreate")]
+    [Migration("20250410065628_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace AnimeNowApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -45,7 +45,8 @@ namespace AnimeNowApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(3, 1)
+                        .HasColumnType("decimal(3,1)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -86,6 +87,38 @@ namespace AnimeNowApi.Migrations
                     b.ToTable("BangumiGenres");
                 });
 
+            modelBuilder.Entity("AnimeNowApi.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TargetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TargetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("AnimeNowApi.Models.Episode", b =>
                 {
                     b.Property<int>("Id")
@@ -112,7 +145,6 @@ namespace AnimeNowApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Thumbnail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -120,7 +152,6 @@ namespace AnimeNowApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VideoUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Views")
@@ -131,6 +162,29 @@ namespace AnimeNowApi.Migrations
                     b.HasIndex("BangumiId");
 
                     b.ToTable("Episodes");
+                });
+
+            modelBuilder.Entity("AnimeNowApi.Models.Favorite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BangumiId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BangumiId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorite");
                 });
 
             modelBuilder.Entity("AnimeNowApi.Models.Genre", b =>
@@ -148,6 +202,73 @@ namespace AnimeNowApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("AnimeNowApi.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AnimeNowApi.Models.WatchHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EpisodeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastWatched")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EpisodeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WatchHistory");
                 });
 
             modelBuilder.Entity("AnimeNowApi.Models.BangumiGenre", b =>
@@ -169,6 +290,17 @@ namespace AnimeNowApi.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("AnimeNowApi.Models.Comment", b =>
+                {
+                    b.HasOne("AnimeNowApi.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AnimeNowApi.Models.Episode", b =>
                 {
                     b.HasOne("AnimeNowApi.Models.Bangumi", "Bangumi")
@@ -178,6 +310,44 @@ namespace AnimeNowApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Bangumi");
+                });
+
+            modelBuilder.Entity("AnimeNowApi.Models.Favorite", b =>
+                {
+                    b.HasOne("AnimeNowApi.Models.Bangumi", "Bangumi")
+                        .WithMany()
+                        .HasForeignKey("BangumiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AnimeNowApi.Models.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bangumi");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AnimeNowApi.Models.WatchHistory", b =>
+                {
+                    b.HasOne("AnimeNowApi.Models.Episode", "Episode")
+                        .WithMany()
+                        .HasForeignKey("EpisodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AnimeNowApi.Models.User", "User")
+                        .WithMany("WatchHistory")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Episode");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AnimeNowApi.Models.Bangumi", b =>
@@ -190,6 +360,15 @@ namespace AnimeNowApi.Migrations
             modelBuilder.Entity("AnimeNowApi.Models.Genre", b =>
                 {
                     b.Navigation("BangumiGenres");
+                });
+
+            modelBuilder.Entity("AnimeNowApi.Models.User", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Favorites");
+
+                    b.Navigation("WatchHistory");
                 });
 #pragma warning restore 612, 618
         }

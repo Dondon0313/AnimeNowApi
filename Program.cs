@@ -30,9 +30,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnimeNow API", Version = "v1" });
 });
 
-// 暫時使用 InMemory 資料庫而非 SQL Server
 builder.Services.AddDbContext<AnimeDbContext>(options =>
-    options.UseInMemoryDatabase("AnimeDb"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 添加 AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile), typeof(Program));
@@ -72,6 +71,11 @@ builder.Services.AddAuthorization();
 // 註冊 TokenService
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddHostedService<AnimeScrapingService>();
+
+// 註冊通知服務
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
 // 建立應用程序
 var app = builder.Build();
 
@@ -79,7 +83,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimeNow API v1"));
 
-// CORS
 app.UseCors("AllowVueApp");
 
 // 認證和授權
@@ -105,4 +108,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.UseStaticFiles();
 app.Run();

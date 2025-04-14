@@ -8,8 +8,15 @@ namespace AnimeNowApi.Data
     {
         public AnimeDbContext CreateDbContext(string[] args)
         {
+            // 加載配置
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.Development.json", optional: true)
+                .Build();
+
             var optionsBuilder = new DbContextOptionsBuilder<AnimeDbContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AnimeNowDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
             return new AnimeDbContext(optionsBuilder.Options);
         }

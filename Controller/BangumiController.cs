@@ -78,5 +78,23 @@ namespace AnimeNowApi.Controllers
 
             return _mapper.Map<List<BangumiDto>>(bangumis);
         }
+
+        // GET: api/Bangumi/Search
+        [HttpGet("Search")]
+        public async Task<ActionResult<IEnumerable<BangumiDto>>> SearchBangumis([FromQuery] string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return await GetBangumis();
+            }
+
+            var bangumis = await _context.Bangumis
+                .Include(b => b.BangumiGenres)
+                .ThenInclude(bg => bg.Genre)
+                .Where(b => b.Title.Contains(query) || b.Description.Contains(query))
+                .ToListAsync();
+
+            return _mapper.Map<List<BangumiDto>>(bangumis);
+        }
     }
 }

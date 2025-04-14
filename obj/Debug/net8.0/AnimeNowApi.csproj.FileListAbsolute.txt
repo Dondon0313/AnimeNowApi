@@ -136,7 +136,6 @@ C:\code\AnimeNowApi\obj\Debug\net8.0\staticwebassets\msbuild.build.AnimeNowApi.p
 C:\code\AnimeNowApi\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.AnimeNowApi.props
 C:\code\AnimeNowApi\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.AnimeNowApi.props
 C:\code\AnimeNowApi\obj\Debug\net8.0\staticwebassets.pack.json
-C:\code\AnimeNowApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\code\AnimeNowApi\obj\Debug\net8.0\AnimeNow.18B4798A.Up2Date
 C:\code\AnimeNowApi\obj\Debug\net8.0\AnimeNowApi.dll
 C:\code\AnimeNowApi\obj\Debug\net8.0\refint\AnimeNowApi.dll
@@ -147,3 +146,4 @@ C:\code\AnimeNowApi\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\code\AnimeNowApi\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\code\AnimeNowApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\code\AnimeNowApi\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\code\AnimeNowApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

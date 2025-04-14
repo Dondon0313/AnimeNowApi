@@ -1,5 +1,4 @@
-﻿// AdminController.cs
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ namespace AnimeNowApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")] // 需要管理員角色
+    [Authorize(Roles = "Admin")] 
     public class AdminController : ControllerBase
     {
         private readonly AnimeDbContext _context;

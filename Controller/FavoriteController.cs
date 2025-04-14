@@ -1,5 +1,4 @@
-﻿// FavoriteController.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -31,11 +30,11 @@ namespace AnimeNowApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BangumiDto>>> GetUserFavorites()
         {
-            // 安全地解析 UserId
+            
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return Unauthorized(); // 或者適當的錯誤處理
+                return Unauthorized(); 
             }
 
             var favorites = await _context.Favorite

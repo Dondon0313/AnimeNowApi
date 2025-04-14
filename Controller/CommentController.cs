@@ -86,7 +86,7 @@ namespace AnimeNowApi.Controllers
             var comment = new Comment
             {
                 UserId = userId,
-                User = user,  // 確保設置 User 屬性
+                User = user,  
                 TargetId = commentDto.TargetId,
                 TargetType = commentDto.TargetType,
                 Content = commentDto.Content,

@@ -41,7 +41,7 @@ namespace AnimeNowApi.Controllers
                 return BadRequest("文件大小不能超過 5MB");
             }
 
-            // 生成唯一文件名
+            
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
             var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
 

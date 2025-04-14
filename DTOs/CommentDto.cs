@@ -1,5 +1,4 @@
-﻿// CommentDto.cs
-using System;
+﻿using System;
 
 namespace AnimeNowApi.DTOs
 {

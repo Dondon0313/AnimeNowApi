@@ -33,7 +33,7 @@ namespace AnimeNowApi.Services
             return Task.CompletedTask;
         }
 
-        private async void DoWork(object? state) // 修改為可空參數
+        private async void DoWork(object? state) 
         {
             _logger.LogInformation("番劇爬蟲開始工作");
 

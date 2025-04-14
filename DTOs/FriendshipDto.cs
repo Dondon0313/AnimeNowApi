@@ -1,5 +1,4 @@
-﻿// FriendshipDto.cs
-namespace AnimeNowApi.DTOs
+﻿namespace AnimeNowApi.DTOs
 {
     public class FriendshipDto
     {

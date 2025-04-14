@@ -1,5 +1,4 @@
-﻿// NotificationDto.cs (在 DTOs 資料夾下創建此檔案)
-using System;
+﻿using System;
 
 namespace AnimeNowApi.DTOs
 {

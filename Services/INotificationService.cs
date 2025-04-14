@@ -1,7 +1,6 @@
-﻿// INotificationService.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AnimeNowApi.DTOs;  // 確保添加這個引用
+using AnimeNowApi.DTOs;  
 
 namespace AnimeNowApi.Services
 {

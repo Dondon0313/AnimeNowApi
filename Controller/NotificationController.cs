@@ -1,5 +1,4 @@
-﻿// NotificationController.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -25,11 +24,11 @@ namespace AnimeNowApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NotificationDto>>> GetNotifications([FromQuery] bool unreadOnly = false)
         {
-            // 安全地解析 UserId
+            
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return Unauthorized(); // 如果無法取得有效的使用者 ID
+                return Unauthorized(); 
             }
 
             var notifications = await _notificationService.GetUserNotifications(userId, unreadOnly);

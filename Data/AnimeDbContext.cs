@@ -1,5 +1,4 @@
-﻿// AnimeDbContext.cs (更新)
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using AnimeNowApi.Models;
 
 namespace AnimeNowApi.Data
@@ -24,7 +23,7 @@ namespace AnimeNowApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // 現有配置
+            
             modelBuilder.Entity<BangumiGenre>()
                 .HasKey(bg => new { bg.BangumiId, bg.GenreId });
 

@@ -1,5 +1,4 @@
-﻿// RecommendationController.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -163,7 +162,7 @@ namespace AnimeNowApi.Controllers
             {
                 if (trendScores.ContainsKey(comment.BangumiId))
                 {
-                    trendScores[comment.BangumiId] += comment.CommentCount * 2; // 評論權重高於觀看
+                    trendScores[comment.BangumiId] += comment.CommentCount * 2; 
                 }
                 else
                 {
